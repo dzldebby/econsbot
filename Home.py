@@ -8,6 +8,11 @@ from langchain.prompts import PromptTemplate
 from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from langchain.chains import ConversationalRetrievalChain
 import re
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Must be the first Streamlit command
 st.set_page_config(
@@ -17,8 +22,8 @@ st.set_page_config(
 )
 
 # API Configuration
-API_KEY = "sk-9yferRaarrs_xmdJKA3uMg"
-API_BASE = "https://litellm.govtext.gov.sg/"
+API_KEY = os.getenv("OPENAI_API_KEY")
+API_BASE = os.getenv("API_BASE")
 HEADERS = {"user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/81.0"}
 
 # Security: Input validation function
@@ -172,5 +177,5 @@ if prompt := st.chat_input("Ask me about the textbook"):
 # Add a footer
 st.markdown("""
 ---
-Made with ❤️ by Your Team | [About Us](/About_Us) | [Methodology](/Methodology)
+Made with ❤️ by Christabelle and Debby | [About Us](/About_Us) | [Methodology](/Methodology)
 """)
