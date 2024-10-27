@@ -9,21 +9,10 @@ from langchain.chains.conversation.memory import ConversationBufferWindowMemory
 from langchain.chains import ConversationalRetrievalChain
 import re
 import os
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
-
-# Must be the first Streamlit command
-st.set_page_config(
-    page_title="Textbook Assistant",
-    page_icon="📚",
-    layout="wide"
-)
 
 # API Configuration
-API_KEY = os.getenv("OPENAI_API_KEY")
-API_BASE = os.getenv("API_BASE")
+API_KEY = st.secrets["API_KEY"]
+API_BASE = st.secrets["API_BASE"]
 HEADERS = {"user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/81.0"}
 
 # Security: Input validation function
@@ -93,7 +82,7 @@ if "retriever" not in st.session_state:
 with st.spinner('Initializing AI model...'):
     try:
         llm = ChatOpenAI(
-            model="gpt-4o-prd-gcc2-lb",
+            model="gpt-35-turbo-prd-gcc2-lb",
             temperature=0.1,
             openai_api_key=API_KEY,
             openai_api_base=API_BASE,
