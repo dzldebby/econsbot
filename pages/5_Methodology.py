@@ -10,6 +10,22 @@ st.set_page_config(
 st.title("Methodology")
 st.write("Learn about the technical implementation and approaches used in our application.")
 
+# Textbook Information
+st.header("About the Textbook")
+st.markdown("""
+This application is built upon the textbook **"GCE A Level Economics: The Examination Skills Guide"**, 
+authored by **Christabelle Soh**, who is also one of the developers of this chatbot. This unique integration 
+of author expertise and AI technology ensures that:
+
+- 📚 The AI understands the exact pedagogical approach intended by the author
+- 🎯 Responses align perfectly with the examination requirements
+- 💡 Explanations follow the same teaching methodology used in the book
+- ✍️ Answer evaluations reflect the author's assessment standards
+
+This direct connection between the textbook author and the AI system development creates a more 
+coherent and reliable learning experience for students.
+""")
+
 # Feature 1: Ask My Textbook
 st.header("1. Ask My Textbook - Question Answering System")
 st.write("""

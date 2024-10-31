@@ -75,14 +75,6 @@ st.markdown("""
   - Content filtering
 """)
 
-# Contact Information
-st.header("Contact Us")
-st.write("""
-For questions, suggestions, or feedback, please reach out to us:
-- Email: [contact@example.com](mailto:contact@example.com)
-- GitHub: [Project Repository](https://github.com/dzldebby/econsbot)
-""")
-
 # Footer
 st.markdown("""
 ---
