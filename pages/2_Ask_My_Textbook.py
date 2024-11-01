@@ -15,7 +15,12 @@ API_KEY = st.secrets["API_KEY"]
 API_BASE = st.secrets["API_BASE"]
 HEADERS = {"user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/81.0"}
 
-
+# At the top of your file, add page config with LaTeX support
+st.set_page_config(
+    page_title="Ask My Textbook",
+    page_icon="📚",
+    layout="wide"
+)
 
 # Security: Input validation function
 def sanitize_input(text):
@@ -31,6 +36,12 @@ Your responses should be:
 2. Academic and professional in tone
 3. Clear and concise
 4. Factual without speculation
+
+For mathematical formulas:
+- Use simple notation for basic terms (PED, YED, XED)
+- For equations, write them plainly like: PED = %ΔQd/%ΔP
+- Avoid complex LaTeX notation
+- Use simple mathematical symbols when needed
 
 If you're unsure or the question is outside the textbook's scope, say "I can only answer questions related to the textbook content."
 
@@ -109,6 +120,24 @@ with st.spinner('Initializing AI model...'):
         st.error(f"An error occurred while initializing the AI model: {str(e)}")
         st.stop()
 
+# Update the format_latex function
+def format_latex(text):
+    """Format text with basic replacements"""
+    # Replace common economics formulas with plain text
+    text = text.replace('\\text{PED}', 'PED')
+    text = text.replace('\\text{YED}', 'YED')
+    text = text.replace('\\text{XED}', 'XED')
+    text = text.replace('\\frac', '')
+    text = text.replace('\\Delta', 'Δ')
+    text = text.replace('\\%', '%')
+    
+    # Remove any remaining LaTeX-style formatting
+    text = re.sub(r'\[.*?\]', '', text)
+    text = re.sub(r'\$.*?\$', '', text)
+    
+    return text
+
+
 # Main chat interface
 st.title("Textbook Assistant")
 st.write("""
@@ -165,10 +194,14 @@ if prompt := st.chat_input("Ask me about the textbook"):
                 response = result["answer"]
                 
                 # Display assistant response
+                # Display assistant response
                 with st.chat_message("assistant"):
-                    st.markdown(response)
-                st.session_state.messages.append({"role": "assistant", "content": response})
-                
+                    formatted_response = format_latex(response)
+                    st.markdown(formatted_response)  # Changed from st.write to st.markdown
+                st.session_state.messages.append({"role": "assistant", "content": formatted_response})
+
+
+
                 # Optional: Display source documents for transparency
                 if "source_documents" in result and result["source_documents"]:
                     with st.expander("View Sources"):
